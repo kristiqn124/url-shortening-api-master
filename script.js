@@ -43,9 +43,10 @@ async function start() {
         input_value.value = "";
         copyText();
         deleteItem();
-      });
+      })
+      .catch((err) => errorUI(`There is something wrong - ${err.message}`));
   } else {
-    errorUI();
+    errorUI("Input Valid URL address");
   }
 }
 
@@ -61,11 +62,11 @@ function removeError() {
   input_value.classList.remove("error_holder");
   input_value.setAttribute("placeholder", "Shorten a link here...");
 }
-function errorUI() {
+function errorUI(msg) {
   btn_shorten.classList.remove("button--loading");
   input_value.value = "";
   input_value.classList.add("error_holder");
-  input_value.setAttribute("placeholder", "Input Valid URL address");
+  input_value.setAttribute("placeholder", msg);
 }
 
 function copyText() {
