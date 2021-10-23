@@ -28,14 +28,14 @@ async function start() {
     removeError();
     btn_shorten.classList.add("button--loading");
     let body = {
-      long_url: `${input_value.value}`,
-      api_token: "s2PAonLeqH6s3eY7aBHUmNnoB6lM89VxMw6OWAJQmO1oX4OethmI8upr4tr7",
+      long_url: input_value.value,
+      domain: "bit.ly",
     };
     let headers = {
+      Authorization: "0111c501da47affbca1cd7a6778ece09b70e8e7d",
       "Content-Type": "application/json",
-      Accept: "application/json",
     };
-    fetch("https://t.ly/api/v1/link/shorten", {
+    fetch("https://api-ssl.bitly.com/v4/shorten", {
       method: "POST",
       headers: headers,
       body: JSON.stringify(body),
@@ -118,7 +118,7 @@ function htmlAdd(users) {
     <div class="original_link">${users.long_url}</div>
     <div class="divider_ip"></div>
       <div class="result">
-        <a href="" class="link_result">${users.short_url}</a>
+        <a href="${users.link}" class="link_result">${users.link}</a>
         <button class="copy_btn">copy</button>
         <button class="trash_btn">
     <svg
@@ -147,15 +147,15 @@ function htmlAdd(users) {
 // Load Links in Storage on Refresh EXE
 async function shortenLinkOnLoadStorage(url) {
   let body = {
-    long_url: `${url}`,
-    api_token: "s2PAonLeqH6s3eY7aBHUmNnoB6lM89VxMw6OWAJQmO1oX4OethmI8upr4tr7",
+    long_url: url,
+    domain: "bit.ly",
   };
   let headers = {
+    Authorization: "0111c501da47affbca1cd7a6778ece09b70e8e7d",
     "Content-Type": "application/json",
-    Accept: "application/json",
   };
   try {
-    const response = await fetch("https://t.ly/api/v1/link/shorten", {
+    const response = await fetch("https://api-ssl.bitly.com/v4/shorten", {
       method: "POST",
       headers: headers,
       body: JSON.stringify(body),
