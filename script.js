@@ -34,8 +34,6 @@ async function start() {
     let headers = {
       Authorization: "0111c501da47affbca1cd7a6778ece09b70e8e7d",
       "Content-Type": "application/json",
-      client_id: "13818761e0397f1de34ccf3934b92b342d2545ef",
-      redirect_uri: "https://bitly.com/oauth/authorize",
     };
     fetch("https://api-ssl.bitly.com/v4/shorten", {
       method: "POST",
