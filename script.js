@@ -44,7 +44,6 @@ async function start() {
         return response.json();
       })
       .then((users) => {
-        console.log(users);
         htmlAdd(users);
         btn_shorten.classList.remove("button--loading");
 
