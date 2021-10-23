@@ -8,10 +8,6 @@ const hamburger = document.querySelector(".hamburger");
 const navMenu = document.querySelector(".resp_menu");
 
 hamburger.addEventListener("click", mobileMenu);
-
-///s2PAonLeqH6s3eY7aBHUmNnoB6lM89VxMw6OWAJQmO1oX4OethmI8upr4tr7
-
-// fetch("https://t.ly/api/v1/link/shorten", body);
 function mobileMenu() {
   hamburger.classList.toggle("active");
   navMenu.classList.toggle("active");
@@ -180,15 +176,6 @@ function getLinks() {
   });
 }
 const removeArrayItem = (arr, item) => {
-  // arr.forEach((mov, i) => {
-  //   console.log(mov.trim() === item.trim());
-  //   console.log(mov.trim());
-  //   console.log(item.trim());
-  //   if (mov.trim() == item.trim()) {
-  //     arr.splice(i, 1);
-  //   }
-  // });
-
   for (let i = 0; i < arr.length; i++) {
     if (arr[i].trim() == item.trim()) {
       arr.splice(i, 1);
