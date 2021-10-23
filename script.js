@@ -9,6 +9,9 @@ const navMenu = document.querySelector(".resp_menu");
 
 hamburger.addEventListener("click", mobileMenu);
 
+///s2PAonLeqH6s3eY7aBHUmNnoB6lM89VxMw6OWAJQmO1oX4OethmI8upr4tr7
+
+// fetch("https://t.ly/api/v1/link/shorten", body);
 function mobileMenu() {
   hamburger.classList.toggle("active");
   navMenu.classList.toggle("active");
@@ -28,16 +31,29 @@ async function start() {
   if (input_value.value.trim() != "" && isValidURL(input_value.value)) {
     removeError();
     btn_shorten.classList.add("button--loading");
-    fetch(`https://api.shrtco.de/v2/shorten?url=${input_value.value}`)
+    let body = {
+      long_url: `${input_value.value}`,
+      api_token: "s2PAonLeqH6s3eY7aBHUmNnoB6lM89VxMw6OWAJQmO1oX4OethmI8upr4tr7",
+    };
+    let headers = {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    };
+    fetch("https://t.ly/api/v1/link/shorten", {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(body),
+    })
       .then((response) => {
         return response.json();
       })
       .then((users) => {
+        console.log(users);
         htmlAdd(users);
         btn_shorten.classList.remove("button--loading");
 
         //Test
-        arr.push(users.result.original_link);
+        arr.push(users.long_url);
         storeLink();
         //
         input_value.value = "";
@@ -90,7 +106,11 @@ function deleteItem() {
 
   delete_btn.forEach((btn) => {
     btn.addEventListener("click", () => {
-      removeArrayItem(arr, btn.parentElement.previousElementSibling.innerHTML);
+      removeArrayItem(
+        arr,
+        btn.parentElement.previousElementSibling.previousElementSibling
+          .textContent
+      );
       btn.parentElement.parentElement.remove();
       storeLink();
     });
@@ -99,10 +119,10 @@ function deleteItem() {
 
 function htmlAdd(users) {
   let html = ` <div class="ip">
-    <div class="original_link">${users.result.original_link}</div>
+    <div class="original_link">${users.long_url}</div>
     <div class="divider_ip"></div>
       <div class="result">
-        <a href="" class="link_result">${users.result.full_short_link}</a>
+        <a href="" class="link_result">${users.short_url}</a>
         <button class="copy_btn">copy</button>
         <button class="trash_btn">
     <svg
@@ -130,8 +150,20 @@ function htmlAdd(users) {
 
 // Load Links in Storage on Refresh EXE
 async function shortenLinkOnLoadStorage(url) {
+  let body = {
+    long_url: `${url}`,
+    api_token: "s2PAonLeqH6s3eY7aBHUmNnoB6lM89VxMw6OWAJQmO1oX4OethmI8upr4tr7",
+  };
+  let headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  };
   try {
-    const response = await fetch(`https://api.shrtco.de/v2/shorten?url=${url}`);
+    const response = await fetch("https://t.ly/api/v1/link/shorten", {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(body),
+    });
     const data = await response.json();
     htmlAdd(data);
     copyText();
@@ -156,9 +188,11 @@ const removeArrayItem = (arr, item) => {
   //     arr.splice(i, 1);
   //   }
   // });
+
   for (let i = 0; i < arr.length; i++) {
     if (arr[i].trim() == item.trim()) {
       arr.splice(i, 1);
+      console.log("remove");
       break;
     }
   }
