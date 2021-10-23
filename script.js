@@ -152,6 +152,7 @@ async function shortenLinkOnLoadStorage(url) {
   let headers = {
     Authorization: "0111c501da47affbca1cd7a6778ece09b70e8e7d",
     "Content-Type": "application/json",
+    access_token: "39af2b3441b33f9c9c794d8c09489001d2988106",
   };
   try {
     const response = await fetch("https://api-ssl.bitly.com/v4/shorten", {
